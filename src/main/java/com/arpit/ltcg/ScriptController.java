@@ -29,6 +29,7 @@ public class ScriptController {
 	@GetMapping("/stocks")
 	public String stocksRequestForm(Model model) {
 		model.addAttribute("stocks", new Stocks());
+		
 		return "stocksView";
 	}
 

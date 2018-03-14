@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>LTCG TAX CALCULATOR</title>
+</head>
+<body>
+
+<table border="1">
+<tr>
+<td>Buying Price</td>
+<td>Selling Price</td>
+<td>Cost Of Aqusition</td>
+<td>Fair Market value (FMV)</td>
+<td>Decision</td>
+<td>Reason Of Decision</td>
+</tr>
+<tr>
+<td th:text="${bp}"/>
+<td  th:text="${sp}"/>
+<td  th:text="${coa}"/>
+<td  th:text="${fmv}"/>
+<td  th:text="${decision}"/>
+<td  th:text="${rod}"/>
+</tr>
+</table>
+ <a href="/stocks">Submit another message</a>
+
+</body>
+</html>

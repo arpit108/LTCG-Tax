@@ -8,7 +8,7 @@
 <body>
 	<div style="text-align:center">
 	<h1>LTCG TAX Calculator</h1>
-    <form action="#" th:action="@{/stockDecision}" th:object="${stocks}" method="post">
+    <form action="#" th:action="@{/stocks}" th:object="${stocks}" method="post">
     	<p>Script Name: <input type="text" th:field="*{scriptName}" /></p>
         <p>Buying Price: <input type="text" th:field="*{buyingPrice}" /></p>
 		<p>Selling Price: <input type="text" th:field="*{sellingPrice}" /></p>

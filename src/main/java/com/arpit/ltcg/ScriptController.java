@@ -33,7 +33,7 @@ public class ScriptController {
 		return "stocksView";
 	}
 
-	@PostMapping("/stockDecision")
+	@PostMapping("/stocks")
 	public String stocksRequestSubmit(@ModelAttribute Stocks stockModel, Model model) {
 		model.addAllAttributes(scriptDecisionModel(stockModel));
 

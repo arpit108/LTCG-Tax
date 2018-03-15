@@ -6,42 +6,56 @@
 </head>
 
 <body>
-	<!-- <div align="center">
-	<h1>LTCG TAX Calculator</h1>
-    <form action="#" th:action="@{/stocks}" th:object="${stocks}" method="post">
-    	
-    	<p>Script Name: <input type="text" th:field="*{scriptName}" /></p>
-    	
-    	<p>Stock Scheme Code*: <input type="text" th:field="*{stockSchemeCode}" /></p>
-    	
-       <p th:each="stockName ,stat : *{stockNames}">
-         <input type="text" th:field="*{stockName[__${stat.index}__]}" />
-       </p>
-        <p>Buying Price: <input type="text" th:field="*{buyingPrice}" /></p>
-		<p>Selling Price: <input type="text" th:field="*{sellingPrice}" /></p>
-		<p>Buying Date: <input type="date" th:field="*{buyingDate}" /></p>
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-        <p>*BSE/NSE Site can be used for getting Scheme Code. Example:HDFC scheme code is 500010</p> -->
-    <div align="center">
-    <h1>LTCG TAX Calculator</h1>
-    <form action="#" th:action="@{/stocks}" th:object="${stocks}" method="post">
-    <table>
-    <tr>
-    <td>Stock Scheme Code*:</td> <td></td><td><input type="text" th:field="*{stockSchemeCode}" required/></td>
-    </tr>
-    <tr><td>Buying Price:</td><td></td><td><input type="text" th:field="*{buyingPrice}" required /></td></tr>
-    <tr><td>Selling Price:</td><td></td><td><input type="text" th:field="*{sellingPrice}" required/></td></tr>
-    <tr><td></td></tr>
-    <tr><td></td></tr>
-    <tr><td></td></tr>
-    <tr><td></td></tr>
-    <tr><td></td></tr>
-    <tr><td></td><td><input type="submit" value="Submit" /></td><td><input type="reset" value="Reset" /></td></tr>
-    
-    
-    </table>
-    </form>
-    <p>*BSE/NSE Site can be used for getting Scheme Code. Example:HDFC scheme code is 500010</p>
-    </div>
+
+	<div align="center">
+		<h1>LTCG TAX Calculator For Stocks</h1>
+		<form action="#" th:action="@{/stocks}" th:object="${stocks}"
+			method="post">
+			<table>
+				<tr>
+					<td>Stock Scheme Code*:</td>
+					<td></td>
+					<td><input type="number" value="500010" th:field="*{stockSchemeCode}"
+						required /></td>
+				</tr>
+				<tr>
+					<td>Buying Price:</td>
+					<td></td>
+					<td><input type="number" min="0" value="0" step=".01"
+						th:field="*{buyingPrice}" required /></td>
+				</tr>
+				<tr>
+					<td>Selling Price:</td>
+					<td></td>
+					<td><input type="number" min="0" value="0" step=".01"
+						th:field="*{sellingPrice}" required /></td>
+				</tr>
+				<tr>
+					<td/>
+				</tr>
+				<tr>
+					<td/>
+				</tr>
+				<tr>
+					<td/>
+				</tr>
+				<tr>
+					<td/>
+				</tr>
+				<tr>
+					<td/>
+				</tr>
+				<tr>
+					<td/>
+					<td><input type="submit" value="Submit" /></td>
+					<td><input type="reset" value="Reset" /></td>
+				</tr>
+
+
+			</table>
+		</form>
+		<p>*BSE/NSE Site can be used for getting Scheme Code. Example:HDFC
+			scheme code is 500010</p>
+	</div>
 </body>
 </html>

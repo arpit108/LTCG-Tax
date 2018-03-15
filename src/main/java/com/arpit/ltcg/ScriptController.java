@@ -45,6 +45,11 @@ public class ScriptController {
 
 	@PostMapping("/stocks")
 	public String stocksRequestSubmit(@ModelAttribute Script stockModel, Model model) {
+		
+		if(service.stockDecisionModel(stockModel)==null)
+			return "errorPage";
+		
+		
 		model.addAllAttributes(service.stockDecisionModel(stockModel));
 
 		return "showResult";
@@ -68,6 +73,10 @@ public class ScriptController {
 
 	@PostMapping("/mf")
 	public String mfRequestSubmit(@ModelAttribute Script stockModel, Model model) {
+		
+		if(service.mfDecisionModel(stockModel)==null)
+			return "errorPage";
+		
 		model.addAllAttributes(service.mfDecisionModel(stockModel));
 
 		return "showResult";

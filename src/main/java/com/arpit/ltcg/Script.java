@@ -6,38 +6,31 @@ import java.util.List;
 public class Script {
 
 	String scriptName;
-	String buyingPrice;
-	String sellingPrice;
+	Double buyingPrice;
+	Double sellingPrice;
 	List<String> stockNames;
 	Date buyingDate;
 	String mfSchemeCode;
-	String stockSchemeCode;
+	Long stockSchemeCode;
 	List<String> mfSchemeName;
 	
-	public Date getBuyingDate() {
-		return buyingDate;
-	}
-	public void setBuyingDate(Date buyingDate) {
-		this.buyingDate = buyingDate;
-	}
-	
-	public String getBuyingPrice() {
-		return buyingPrice;
-	}
-	public void setBuyingPrice(String buyingPrice) {
-		this.buyingPrice = buyingPrice;
-	}
-	public String getSellingPrice() {
-		return sellingPrice;
-	}
-	public void setSellingPrice(String sellingPrice) {
-		this.sellingPrice = sellingPrice;
-	}
 	public String getScriptName() {
 		return scriptName;
 	}
 	public void setScriptName(String scriptName) {
 		this.scriptName = scriptName;
+	}
+	public Double getBuyingPrice() {
+		return buyingPrice;
+	}
+	public void setBuyingPrice(Double buyingPrice) {
+		this.buyingPrice = buyingPrice;
+	}
+	public Double getSellingPrice() {
+		return sellingPrice;
+	}
+	public void setSellingPrice(Double sellingPrice) {
+		this.sellingPrice = sellingPrice;
 	}
 	public List<String> getStockNames() {
 		return stockNames;
@@ -45,11 +38,23 @@ public class Script {
 	public void setStockNames(List<String> stockNames) {
 		this.stockNames = stockNames;
 	}
+	public Date getBuyingDate() {
+		return buyingDate;
+	}
+	public void setBuyingDate(Date buyingDate) {
+		this.buyingDate = buyingDate;
+	}
 	public String getMfSchemeCode() {
 		return mfSchemeCode;
 	}
 	public void setMfSchemeCode(String mfSchemeCode) {
 		this.mfSchemeCode = mfSchemeCode;
+	}
+	public Long getStockSchemeCode() {
+		return stockSchemeCode;
+	}
+	public void setStockSchemeCode(Long stockSchemeCode) {
+		this.stockSchemeCode = stockSchemeCode;
 	}
 	public List<String> getMfSchemeName() {
 		return mfSchemeName;
@@ -57,10 +62,7 @@ public class Script {
 	public void setMfSchemeName(List<String> mfSchemeName) {
 		this.mfSchemeName = mfSchemeName;
 	}
-	public String getStockSchemeCode() {
-		return stockSchemeCode;
-	}
-	public void setStockSchemeCode(String stockSchemeCode) {
-		this.stockSchemeCode = stockSchemeCode;
-	}
+	
+	
+	
 }

@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
@@ -190,8 +191,8 @@ public class ScriptService {
 	public Map<String, String> stockDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(stockModel.getBuyingPrice());
-		decision.setSellingPrice(stockModel.getSellingPrice());
+		decision.setBuyingPrice(String.valueOf(stockModel.getBuyingPrice()));
+		decision.setSellingPrice(String.valueOf(stockModel.getSellingPrice()));
 		List<Scripts> scripts = null;
 		try {
 			scripts = readStocksCSVToBean();
@@ -201,13 +202,19 @@ public class ScriptService {
 		String fairMarketvalue = null;
 
 		for (Scripts script : scripts) {
-			if (script.getScriptCode().trim().equalsIgnoreCase(stockModel.getStockSchemeCode().trim())) {
+			if (script.getScriptCode().trim().equalsIgnoreCase(String.valueOf(stockModel.getStockSchemeCode()).trim())) {
 				System.out.println(script.getHighPrice());
 				fairMarketvalue = script.getHighPrice();
 				decision.setFairMarketValue(fairMarketvalue);
 				decision.setScriptName(script.getScriptName());
 			}
 		}
+		
+		if(StringUtils.isBlank(decision.getScriptName()))
+		{
+			return null;
+		}
+		
 
 		Map<String, String> map = getDecisionMap(decision);
 
@@ -217,8 +224,8 @@ public class ScriptService {
 	public Map<String, String> mfDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(stockModel.getBuyingPrice());
-		decision.setSellingPrice(stockModel.getSellingPrice());
+		decision.setBuyingPrice(String.valueOf(stockModel.getBuyingPrice()));
+		decision.setSellingPrice(String.valueOf(stockModel.getSellingPrice()));
 		List<MutualFundObject> mfObjects = null;
 		try {
 			mfObjects = readMFCSVToBean();
@@ -236,6 +243,11 @@ public class ScriptService {
 				decision.setScriptName(mfObject.getSchemeName());
 
 			}
+		}
+		
+		if(StringUtils.isBlank(decision.getScriptName()))
+		{
+			return null;
 		}
 
 		Map<String, String> map = getDecisionMap(decision);

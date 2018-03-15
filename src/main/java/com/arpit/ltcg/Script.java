@@ -11,6 +11,7 @@ public class Script {
 	List<String> stockNames;
 	Date buyingDate;
 	String mfSchemeCode;
+	String stockSchemeCode;
 	List<String> mfSchemeName;
 	
 	public Date getBuyingDate() {
@@ -55,5 +56,11 @@ public class Script {
 	}
 	public void setMfSchemeName(List<String> mfSchemeName) {
 		this.mfSchemeName = mfSchemeName;
+	}
+	public String getStockSchemeCode() {
+		return stockSchemeCode;
+	}
+	public void setStockSchemeCode(String stockSchemeCode) {
+		this.stockSchemeCode = stockSchemeCode;
 	}
 }

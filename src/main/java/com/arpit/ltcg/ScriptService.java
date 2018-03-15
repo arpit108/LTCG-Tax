@@ -74,6 +74,7 @@ public class ScriptService {
 		map.put("fmv", decisionObj.getFairMarketValue());
 		map.put("rod", decisionObj.getReasonOfDecision());
 		map.put("sp", decisionObj.getSellingPrice());
+		map.put("sn", decisionObj.getScriptName());
 		
 		return map;
 	}
@@ -200,12 +201,11 @@ public class ScriptService {
 		String fairMarketvalue = null;
 
 		for (Scripts script : scripts) {
-			if (script.getScriptName().trim().equalsIgnoreCase(stockModel.getScriptName())) {
+			if (script.getScriptCode().trim().equalsIgnoreCase(stockModel.getStockSchemeCode().trim())) {
 				System.out.println(script.getHighPrice());
 				fairMarketvalue = script.getHighPrice();
-
 				decision.setFairMarketValue(fairMarketvalue);
-
+				decision.setScriptName(script.getScriptName());
 			}
 		}
 
@@ -233,6 +233,7 @@ public class ScriptService {
 				fairMarketvalue = mfObject.getNetAssetValue();
 				System.out.println(fairMarketvalue);
 				decision.setFairMarketValue(fairMarketvalue);
+				decision.setScriptName(mfObject.getSchemeName());
 
 			}
 		}

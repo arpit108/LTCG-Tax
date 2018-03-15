@@ -8,6 +8,7 @@ public class DecisionObject {
 	String fairMarketValue;
 	String decision;
 	String reasonOfDecision;
+	String scriptName;
 
 	public String getBuyingPrice() {
 		return buyingPrice;
@@ -56,5 +57,14 @@ public class DecisionObject {
 	public void setReasonOfDecision(String reasonOfDecision) {
 		this.reasonOfDecision = reasonOfDecision;
 	}
+
+	public String getScriptName() {
+		return scriptName;
+	}
+
+	public void setScriptName(String scriptName) {
+		this.scriptName = scriptName;
+	}
+
 
 }

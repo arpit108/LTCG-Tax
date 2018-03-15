@@ -9,10 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.arpit.datamodel.DecisionObject;
 import com.arpit.datamodel.MutualFundObject;
 import com.arpit.datamodel.Scripts;
@@ -20,34 +16,77 @@ import com.arpit.datamodel.Scripts;
 @Controller
 public class ScriptController {
 
-	SuperCSVParserExample parser;
+	ScriptService service;
 
-	public ScriptController(SuperCSVParserExample parser) {
-		this.parser = parser;
+	public ScriptController(ScriptService service) {
+		this.service = service;
 	}
 
+	
+	@GetMapping("/")
+	public String indexRequestForm(Model model) {
+		
+		return "index";
+	}
+	
 	@GetMapping("/stocks")
 	public String stocksRequestForm(Model model) {
-		model.addAttribute("stocks", new Stocks());
+		Script stocks=new Script();
+		try {
+			List<Scripts> scriptDetail=service.readStocksCSVToBean();
+			List<String> stockNames=service.getStocksName(scriptDetail);
+			stocks.setStockNames(stockNames);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("stocks", new Script());
 		
 		return "stocksView";
 	}
 
 	@PostMapping("/stocks")
-	public String stocksRequestSubmit(@ModelAttribute Stocks stockModel, Model model) {
-		model.addAllAttributes(scriptDecisionModel(stockModel));
+	public String stocksRequestSubmit(@ModelAttribute Script stockModel, Model model) {
+		model.addAllAttributes(stockDecisionModel(stockModel));
 
 		return "showResult";
 	}
+	
+	
+	@GetMapping("/mf")
+	public String mfRequestForm(Model model) {
+		Script stocks=new Script();
+		try {
+			List<MutualFundObject> mfDetail=service.readMFCSVToBean();
+			List<String> schemName=service.getMFName(mfDetail);
+			stocks.setMfSchemeName(schemName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("stocks", new Script());
+		
+		return "mfView";
+	}
 
-	public Map<String, String> scriptDecisionModel(Stocks stockModel) {
+	@PostMapping("/mf")
+	public String mfRequestSubmit(@ModelAttribute Script stockModel, Model model) {
+		model.addAllAttributes(mfDecisionModel(stockModel));
+
+		return "showResult";
+	}
+	
+	
+	
+
+	public Map<String, String> stockDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
 		decision.setBuyingPrice(stockModel.getBuyingPrice());
 		decision.setSellingPrice(stockModel.getSellingPrice());
 		List<Scripts> scripts = null;
 		try {
-			scripts = parser.readStocksCSVToBean();
+			scripts = service.readStocksCSVToBean();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -63,12 +102,12 @@ public class ScriptController {
 			}
 		}
 
-		Map<String, String> map = parser.getDecisionMap(decision);
+		Map<String, String> map = service.getDecisionMap(decision);
 
 		return map;
 	}
 
-	@RequestMapping("/getDicision/stocks")
+	/*@RequestMapping("/getDicision/stocks")
 	public String scriptDecision(Model model, @RequestParam(value = "script") String scriptName,
 			@RequestParam(value = "buyingPrice") String buyingPrice,
 			@RequestParam(value = "sellingPrice") String sellingPrice) {
@@ -78,7 +117,7 @@ public class ScriptController {
 		decision.setSellingPrice(sellingPrice);
 		List<Scripts> scripts = null;
 		try {
-			scripts = parser.readStocksCSVToBean();
+			scripts = service.readStocksCSVToBean();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -98,31 +137,29 @@ public class ScriptController {
 			return "showpage";
 		}
 
-		Map<String, String> map = parser.getDecisionMap(decision);
+		Map<String, String> map = service.getDecisionMap(decision);
 
 		model.addAllAttributes(map);
 
 		return "showpage";
 	}
-
-	@RequestMapping("/getDicision/mf")
-	public DecisionObject mfDecision(@RequestParam(value = "schemeCode") String schemeCode,
-			@RequestParam(value = "buyingPrice") String buyingPrice,
-			@RequestParam(value = "sellingPrice") String sellingPrice) {
+*/
+	
+	public Map<String, String>  mfDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(buyingPrice);
-		decision.setSellingPrice(sellingPrice);
+		decision.setBuyingPrice(stockModel.getBuyingPrice());
+		decision.setSellingPrice(stockModel.getSellingPrice());
 		List<MutualFundObject> mfObjects = null;
 		try {
-			mfObjects = parser.readMFCSVToBean();
+			mfObjects = service.readMFCSVToBean();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		String fairMarketvalue = null;
 
 		for (MutualFundObject mfObject : mfObjects) {
-			if (mfObject.getSchemeCode().trim().equalsIgnoreCase(schemeCode)) {
+			if (mfObject.getSchemeCode().trim().equalsIgnoreCase(stockModel.getMfSchemeCode())) {
 
 				fairMarketvalue = mfObject.getNetAssetValue();
 				System.out.println(fairMarketvalue);
@@ -131,9 +168,9 @@ public class ScriptController {
 			}
 		}
 
-		// parser.setDecision(decision);
+		Map<String, String> map = service.getDecisionMap(decision);
 
-		return decision;
+		return map;
 	}
 
 }

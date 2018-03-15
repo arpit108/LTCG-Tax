@@ -25,7 +25,7 @@ import com.arpit.datamodel.MutualFundObject;
 import com.arpit.datamodel.Scripts;
 
 @Service
-public class SuperCSVParserExample {
+public class ScriptService {
 
 
 	String saleDecisionTemplate = "Sale Now!! Cost of Aquisition as per LTCG rule is : %s and Cost of your Selling is : %s. Hence Net Profit you are getting is %s which will be taxed if not sold before 31-March-2018 ";
@@ -118,13 +118,42 @@ public class SuperCSVParserExample {
 		}
 		return scriptsDetail;
 	}
+	
+	
+	public List<String> getStocksName(List<Scripts> scriptDetails)
+	{
+		List<String> stocksNames=new ArrayList<>();
+		
+		for(Scripts scriptDetail:scriptDetails)
+		{
+			stocksNames.add(scriptDetail.getScriptName().trim());
+		}
+		
+		return stocksNames;
+	}
+	
+	
+	public List<String> getMFName(List<MutualFundObject> mfDetail)
+	{
+		List<String> mfNames=new ArrayList<>();
+		
+		for(MutualFundObject mfName:mfDetail)
+		{
+			mfNames.add(mfName.getSchemeName().trim());
+		}
+		
+		return mfNames;
+	}
+	
 
 	public List<MutualFundObject> readMFCSVToBean() throws IOException {
 		ICsvBeanReader beanReader = null;
 		List<MutualFundObject> mfObjectDetails = new ArrayList<MutualFundObject>();
 		try {
-
-			beanReader = new CsvBeanReader(new FileReader("nav_all.csv"),
+			InputStream in = this.getClass().getClassLoader()
+                    .getResourceAsStream("nav_all.csv");
+			InputStreamReader isr=new InputStreamReader(in);
+			beanReader = new CsvBeanReader(isr,
 					CsvPreference.STANDARD_PREFERENCE);
 
 			// the name mapping provide the basis for bean setters

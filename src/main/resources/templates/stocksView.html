@@ -9,9 +9,14 @@
 	<div style="text-align:center">
 	<h1>LTCG TAX Calculator</h1>
     <form action="#" th:action="@{/stocks}" th:object="${stocks}" method="post">
+    	
     	<p>Script Name: <input type="text" th:field="*{scriptName}" /></p>
+      <!--  <p th:each="stockName ,stat : *{stockNames}">
+         <input type="text" th:field="*{stockName[__${stat.index}__]}" />
+       </p> -->
         <p>Buying Price: <input type="text" th:field="*{buyingPrice}" /></p>
 		<p>Selling Price: <input type="text" th:field="*{sellingPrice}" /></p>
+		<!-- <p>Buying Date: <input type="date" th:field="*{buyingDate}" /></p> -->
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
     </div>

@@ -1,6 +1,5 @@
 package com.arpit.ltcg;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -10,8 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.supercsv.cellprocessor.Optional;
 import org.supercsv.cellprocessor.constraint.NotNull;
@@ -34,29 +31,27 @@ public class ScriptService {
 
 	public Map<String,String> getDecisionMap(DecisionObject decisionObj) {
 
-		Double buyingPriceValue = Double.parseDouble(decisionObj
-				.getBuyingPrice());
-		Double fmv = Double.parseDouble(decisionObj.getFairMarketValue());
-		Double sellingPriceValue = Double.parseDouble(decisionObj
-				.getSellingPrice());
+		Double buyingPriceValue = decisionObj.getBuyingPrice();
+		Double fmv = decisionObj.getFairMarketValue();
+		Double sellingPriceValue = decisionObj.getSellingPrice();
 
 		Double lowerValue = fmv > sellingPriceValue ? sellingPriceValue : fmv;
 		Double costOfAquisition = buyingPriceValue > lowerValue ? buyingPriceValue
 				: lowerValue;
 
-		decisionObj.setCostOfAqusition(String.valueOf(costOfAquisition));
+		decisionObj.setCostOfAqusition(costOfAquisition);
 
 		if (sellingPriceValue > costOfAquisition) {
 			decisionObj.setDecision("Sale");
 			decisionObj.setReasonOfDecision(String.format(saleDecisionTemplate,
 					costOfAquisition, sellingPriceValue,
-					(sellingPriceValue - costOfAquisition)));
+					(sellingPriceValue - costOfAquisition) * decisionObj.getTotalQuantity()));
 		} else {
 			
 			decisionObj.setDecision("Not Sale");
 			decisionObj.setReasonOfDecision(String.format(
 					notSaleDecisionTemplate, costOfAquisition,
-					sellingPriceValue, (costOfAquisition - sellingPriceValue)));
+					sellingPriceValue, (costOfAquisition - sellingPriceValue) * decisionObj.getTotalQuantity()));
 		}
 		
 		return buildMap(decisionObj);
@@ -69,12 +64,12 @@ public class ScriptService {
 		Map<String,String> map=new HashMap<>();
 		
 		
-		map.put("bp", decisionObj.getBuyingPrice());
-		map.put("coa", decisionObj.getCostOfAqusition());
+		map.put("bp", String.valueOf(decisionObj.getBuyingPrice()));
+		map.put("coa", String.valueOf(decisionObj.getCostOfAqusition()));
 		map.put("decision", decisionObj.getDecision());
-		map.put("fmv", decisionObj.getFairMarketValue());
+		map.put("fmv", String.valueOf(decisionObj.getFairMarketValue()));
 		map.put("rod", decisionObj.getReasonOfDecision());
-		map.put("sp", decisionObj.getSellingPrice());
+		map.put("sp", String.valueOf(decisionObj.getSellingPrice()));
 		map.put("sn", decisionObj.getScriptName());
 		
 		return map;
@@ -191,8 +186,14 @@ public class ScriptService {
 	public Map<String, String> stockDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(String.valueOf(stockModel.getBuyingPrice()));
-		decision.setSellingPrice(String.valueOf(stockModel.getSellingPrice()));
+		decision.setBuyingPrice(stockModel.getBuyingPrice());
+		decision.setSellingPrice(stockModel.getSellingPrice());
+		
+		if(stockModel.getTotalQuantity()!=null)
+		  decision.setTotalQuantity(stockModel.getTotalQuantity());
+		else
+			decision.setTotalQuantity(1L);
+		
 		List<Scripts> scripts = null;
 		try {
 			scripts = readStocksCSVToBean();
@@ -205,7 +206,7 @@ public class ScriptService {
 			if (script.getScriptCode().trim().equalsIgnoreCase(String.valueOf(stockModel.getStockSchemeCode()).trim())) {
 				System.out.println(script.getHighPrice());
 				fairMarketvalue = script.getHighPrice();
-				decision.setFairMarketValue(fairMarketvalue);
+				decision.setFairMarketValue(Double.parseDouble(fairMarketvalue));
 				decision.setScriptName(script.getScriptName());
 			}
 		}
@@ -224,8 +225,14 @@ public class ScriptService {
 	public Map<String, String> mfDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(String.valueOf(stockModel.getBuyingPrice()));
-		decision.setSellingPrice(String.valueOf(stockModel.getSellingPrice()));
+		decision.setBuyingPrice(stockModel.getBuyingPrice());
+		decision.setSellingPrice(stockModel.getSellingPrice());
+		if(stockModel.getTotalQuantity()!=null)
+			  decision.setTotalQuantity(stockModel.getTotalQuantity());
+			else
+				decision.setTotalQuantity(1L);
+			
+		
 		List<MutualFundObject> mfObjects = null;
 		try {
 			mfObjects = readMFCSVToBean();
@@ -239,7 +246,7 @@ public class ScriptService {
 
 				fairMarketvalue = mfObject.getNetAssetValue();
 				System.out.println(fairMarketvalue);
-				decision.setFairMarketValue(fairMarketvalue);
+				decision.setFairMarketValue(Double.parseDouble(fairMarketvalue));
 				decision.setScriptName(mfObject.getSchemeName());
 
 			}

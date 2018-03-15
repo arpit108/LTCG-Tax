@@ -13,6 +13,8 @@ public class Script {
 	String mfSchemeCode;
 	Long stockSchemeCode;
 	List<String> mfSchemeName;
+	Long totalQuantity;
+	
 	
 	public String getScriptName() {
 		return scriptName;
@@ -61,6 +63,12 @@ public class Script {
 	}
 	public void setMfSchemeName(List<String> mfSchemeName) {
 		this.mfSchemeName = mfSchemeName;
+	}
+	public Long getTotalQuantity() {
+		return totalQuantity;
+	}
+	public void setTotalQuantity(Long totalQuantity) {
+		this.totalQuantity = totalQuantity;
 	}
 	
 	

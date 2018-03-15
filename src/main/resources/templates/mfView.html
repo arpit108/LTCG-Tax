@@ -15,7 +15,8 @@
          <input type="text" th:field="*{stockName[__${stat.index}__]}" />
        </p> -->
         <p>Buying NAV Price: <input type="number" required min="0" value="0" step=".01" th:field="*{buyingPrice}" /></p>
-		<p>Selling NAV Price: <input type="text" required min="0" value="0" step=".01" th:field="*{sellingPrice}" /></p>
+		<p>Selling NAV Price: <input type="number" required min="0" value="0" step=".01" th:field="*{sellingPrice}" /></p>
+		<p>Total Units: <input type="number" th:field="*{totalQuantity}" /></p>
 		<!-- <p>Buying Date: <input type="date" required th:field="*{buyingDate}" /></p> -->
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>

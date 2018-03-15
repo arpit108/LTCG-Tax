@@ -27,7 +27,7 @@
     <form action="#" th:action="@{/stocks}" th:object="${stocks}" method="post">
     <table>
     <tr>
-    <td>Stock Scheme Code*:</td> <td></td><td><input type="text" th:field="*{stockSchemeCode}" required/></td>
+    <td>Stock Scheme Code*:</td> <td></td><td><input type="number" th:field="*{stockSchemeCode}" required/></td>
     </tr>
     <tr><td>Buying Price:</td><td></td><td><input type="text" th:field="*{sellingPrice}" required /></td></tr>
     <tr><td>Selling Price:</td><td></td><td><input type="text" th:field="*{sellingPrice}" required/></td></tr>

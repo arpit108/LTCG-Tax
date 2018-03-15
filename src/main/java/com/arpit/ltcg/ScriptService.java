@@ -189,5 +189,62 @@ public class ScriptService {
 		};
 		return processors;
 	}
+	
+	
+	public Map<String, String> stockDecisionModel(Script stockModel) {
+
+		DecisionObject decision = new DecisionObject();
+		decision.setBuyingPrice(stockModel.getBuyingPrice());
+		decision.setSellingPrice(stockModel.getSellingPrice());
+		List<Scripts> scripts = null;
+		try {
+			scripts = readStocksCSVToBean();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String fairMarketvalue = null;
+
+		for (Scripts script : scripts) {
+			if (script.getScriptName().trim().equalsIgnoreCase(stockModel.getScriptName())) {
+				System.out.println(script.getHighPrice());
+				fairMarketvalue = script.getHighPrice();
+
+				decision.setFairMarketValue(fairMarketvalue);
+
+			}
+		}
+
+		Map<String, String> map = getDecisionMap(decision);
+
+		return map;
+	}
+
+	public Map<String, String> mfDecisionModel(Script stockModel) {
+
+		DecisionObject decision = new DecisionObject();
+		decision.setBuyingPrice(stockModel.getBuyingPrice());
+		decision.setSellingPrice(stockModel.getSellingPrice());
+		List<MutualFundObject> mfObjects = null;
+		try {
+			mfObjects = readMFCSVToBean();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		String fairMarketvalue = null;
+
+		for (MutualFundObject mfObject : mfObjects) {
+			if (mfObject.getSchemeCode().trim().equalsIgnoreCase(stockModel.getMfSchemeCode())) {
+
+				fairMarketvalue = mfObject.getNetAssetValue();
+				System.out.println(fairMarketvalue);
+				decision.setFairMarketValue(fairMarketvalue);
+
+			}
+		}
+
+		Map<String, String> map = getDecisionMap(decision);
+
+		return map;
+	}
 
 }

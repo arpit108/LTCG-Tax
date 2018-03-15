@@ -2,8 +2,6 @@ package com.arpit.ltcg;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,27 +27,25 @@ public class ScriptController {
 
 	@GetMapping("/stocks")
 	public String stocksRequestForm(Model model) {
-		Script stocks = new Script();
+		List<Scripts> scriptDetail = null;
 		try {
-			List<Scripts> scriptDetail = service.readStocksCSVToBean();
-			List<String> stockNames = service.getStocksName(scriptDetail);
-			stocks.setStockNames(stockNames);
+			scriptDetail = service.readStocksCSVToBean();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		model.addAttribute("stocks", new Script());
+		model.addAttribute("scriptDetail", scriptDetail);
 
 		return "stocksView";
 	}
 
 	@PostMapping("/stocks")
 	public String stocksRequestSubmit(@ModelAttribute Script stockModel, Model model) {
-		
-		if(service.stockDecisionModel(stockModel)==null)
+
+		if (service.stockDecisionModel(stockModel) == null)
 			return "errorPage";
-		
-		
+
 		model.addAllAttributes(service.stockDecisionModel(stockModel));
 
 		return "showResult";
@@ -57,31 +53,28 @@ public class ScriptController {
 
 	@GetMapping("/mf")
 	public String mfRequestForm(Model model) {
-		Script stocks = new Script();
+		List<MutualFundObject> mfDetail = null;
 		try {
-			List<MutualFundObject> mfDetail = service.readMFCSVToBean();
-			List<String> schemName = service.getMFName(mfDetail);
-			stocks.setMfSchemeName(schemName);
+			mfDetail = service.readMFCSVToBean();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		model.addAttribute("stocks", new Script());
+		model.addAttribute("scriptDetail", mfDetail);
 
 		return "mfView";
 	}
 
 	@PostMapping("/mf")
 	public String mfRequestSubmit(@ModelAttribute Script stockModel, Model model) {
-		
-		if(service.mfDecisionModel(stockModel)==null)
+
+		if (service.mfDecisionModel(stockModel) == null)
 			return "errorPage";
-		
+
 		model.addAllAttributes(service.mfDecisionModel(stockModel));
 
 		return "showResult";
 	}
-
-	
 
 }

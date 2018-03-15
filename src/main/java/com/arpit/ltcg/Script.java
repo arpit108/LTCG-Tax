@@ -1,18 +1,15 @@
 package com.arpit.ltcg;
 
 import java.util.Date;
-import java.util.List;
 
 public class Script {
 
 	String scriptName;
 	Double buyingPrice;
 	Double sellingPrice;
-	List<String> stockNames;
 	Date buyingDate;
-	String mfSchemeCode;
+	Long mfSchemeCode;
 	Long stockSchemeCode;
-	List<String> mfSchemeName;
 	Long totalQuantity;
 	
 	
@@ -34,22 +31,16 @@ public class Script {
 	public void setSellingPrice(Double sellingPrice) {
 		this.sellingPrice = sellingPrice;
 	}
-	public List<String> getStockNames() {
-		return stockNames;
-	}
-	public void setStockNames(List<String> stockNames) {
-		this.stockNames = stockNames;
-	}
 	public Date getBuyingDate() {
 		return buyingDate;
 	}
 	public void setBuyingDate(Date buyingDate) {
 		this.buyingDate = buyingDate;
 	}
-	public String getMfSchemeCode() {
+	public Long getMfSchemeCode() {
 		return mfSchemeCode;
 	}
-	public void setMfSchemeCode(String mfSchemeCode) {
+	public void setMfSchemeCode(Long mfSchemeCode) {
 		this.mfSchemeCode = mfSchemeCode;
 	}
 	public Long getStockSchemeCode() {
@@ -57,12 +48,6 @@ public class Script {
 	}
 	public void setStockSchemeCode(Long stockSchemeCode) {
 		this.stockSchemeCode = stockSchemeCode;
-	}
-	public List<String> getMfSchemeName() {
-		return mfSchemeName;
-	}
-	public void setMfSchemeName(List<String> mfSchemeName) {
-		this.mfSchemeName = mfSchemeName;
 	}
 	public Long getTotalQuantity() {
 		return totalQuantity;

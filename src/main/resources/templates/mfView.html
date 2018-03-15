@@ -12,9 +12,19 @@
 			method="post">
 			<table>
 				<tr>
-					<td>MF Scheme Code:</td>
+					<td>Mutual Fund Name:</td>
 					<td></td>
-					<td><input type="number" required th:field="*{mfSchemeCode}" /></td>
+					<td>
+					    <select th:field="*{scriptName}">
+					        <option th:each="script :${scriptDetail}" th:value="${script.schemeName}" th:text="${script.schemeName}"></option>
+					    </select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>MF Scheme Code (Optional):</td>
+					<td></td>
+					<td><input type="number" th:field="*{mfSchemeCode}" /></td>
 				</tr>
 				<tr>
 					<td>Buying NAV Price:</td>

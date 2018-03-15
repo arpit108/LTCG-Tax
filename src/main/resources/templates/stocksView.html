@@ -13,10 +13,19 @@
 			method="post">
 			<table>
 				<tr>
-					<td>Stock Scheme Code*:</td>
+					<td>Stock Name:</td>
 					<td></td>
-					<td><input type="number" value="500010" th:field="*{stockSchemeCode}"
-						required /></td>
+					<td>
+					    <select th:field="*{scriptName}">
+					        <option th:each="script :${scriptDetail}" th:value="${script.scriptName}" th:text="${script.scriptName}"></option>
+					    </select>
+					</td>
+				</tr>
+				
+				<tr>
+					<td>Stock Scheme Code (Optional):</td>
+					<td></td>
+					<td><input type="number" value="500010" th:field="*{stockSchemeCode}"/></td>
 				</tr>
 				<tr>
 					<td>Buying Price:</td>
@@ -59,8 +68,6 @@
 
 			</table>
 		</form>
-		<p>*BSE/NSE Site can be used for getting Scheme Code. Example:HDFC
-			scheme code is 500010</p>
 	</div>
 </body>
 </html>

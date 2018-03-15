@@ -6,20 +6,55 @@
 </head>
 
 <body>
-	<div style="text-align:center">
-	<h1>LTCG TAX Calculator</h1>
-    <form action="#" th:action="@{/mf}" th:object="${stocks}" method="post">
-    	
-    	<p>MF Scheme Code: <input type="number" required th:field="*{mfSchemeCode}" /></p>
-      <!--  <p th:each="stockName ,stat : *{stockNames}">
-         <input type="text" th:field="*{stockName[__${stat.index}__]}" />
-       </p> -->
-        <p>Buying NAV Price: <input type="number" required min="0" value="0" step=".01" th:field="*{buyingPrice}" /></p>
-		<p>Selling NAV Price: <input type="number" required min="0" value="0" step=".01" th:field="*{sellingPrice}" /></p>
-		<p>Total Units: <input type="number" th:field="*{totalQuantity}" /></p>
-		<!-- <p>Buying Date: <input type="date" required th:field="*{buyingDate}" /></p> -->
-        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
-    </div>
+	<div align="center">
+		<h1>LTCG TAX Calculator</h1>
+		<form action="#" th:action="@{/mf}" th:object="${stocks}"
+			method="post">
+			<table>
+				<tr>
+					<td>MF Scheme Code:</td>
+					<td></td>
+					<td><input type="number" required th:field="*{mfSchemeCode}" /></td>
+				</tr>
+				<tr>
+					<td>Buying NAV Price:</td>
+					<td></td>
+					<td><input type="number" required min="0" value="0" step=".01"
+						th:field="*{buyingPrice}" /></td>
+				</tr>
+				<tr>
+					<td>Selling NAV Price:</td>
+					<td></td>
+					<td><input type="number" required min="0" value="0" step=".01"
+						th:field="*{sellingPrice}" /></td>
+				</tr>
+				<tr>
+					<td>Total Units:</td>
+					<td></td>
+					<td><input type="number" th:field="*{totalQuantity}" /></td>
+				</tr>
+				<tr>
+					<td />
+				</tr>
+				<tr>
+					<td />
+				</tr>
+				<tr>
+					<td />
+				</tr>
+				<tr>
+					<td />
+				</tr>
+				<tr>
+					<td />
+				</tr>
+				<tr>
+					<td />
+					<td><input type="submit" value="Submit" /></td>
+					<td><input type="reset" value="Reset" /></td>
+				</tr>
+			</table>
+		</form>
+	</div>
 </body>
 </html>

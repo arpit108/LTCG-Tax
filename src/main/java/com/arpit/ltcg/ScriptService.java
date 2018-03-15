@@ -83,13 +83,8 @@ public class ScriptService {
 		List<Scripts> scriptsDetail = new ArrayList<Scripts>();
 		try {
 			
-			/*Resource resource = new ClassPathResource("EQ_ISINCODE_310118_format.csv");
-			FileReader fr = new FileReader(resource.getFile());*/
 			InputStream in = this.getClass().getClassLoader()
                     .getResourceAsStream("EQ_ISINCODE_310118_format.csv");
-			/*beanReader = new CsvBeanReader(new FileReader(
-					"EQ_ISINCODE_310118_format.csv"),
-					CsvPreference.STANDARD_PREFERENCE);*/
 			
 			InputStreamReader isr=new InputStreamReader(in);
 			

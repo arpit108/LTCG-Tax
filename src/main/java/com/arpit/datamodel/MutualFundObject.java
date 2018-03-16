@@ -1,6 +1,6 @@
 package com.arpit.datamodel;
 
-public class MutualFundObject {
+public class MutualFundObject implements Comparable<MutualFundObject> {
 
 	String schemeCode;
 	String isinCode;
@@ -36,6 +36,10 @@ public class MutualFundObject {
 		return "MutualFundObject [schemeCode=" + schemeCode + ", isinCode="
 				+ isinCode + ", schemeName=" + schemeName + ", netAssetValue="
 				+ netAssetValue + "]";
+	}
+	@Override
+	public int compareTo(MutualFundObject o) {
+		return this.getSchemeName().compareTo(o.getSchemeName());
 	}
 	
 	

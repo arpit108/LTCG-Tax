@@ -1,7 +1,7 @@
 package com.arpit.datamodel;
 //SC_CODE	SC_NAME	SC_GROUP	SC_TYPE	OPEN	HIGH	LOW	CLOSE ISIN_CODE
 
-public class Scripts {
+public class Scripts implements Comparable<Scripts>{
 
 	String scriptCode;
 	String scriptName;
@@ -73,6 +73,11 @@ public class Scripts {
 				+ scriptType + ", openPrice=" + openPrice + ", highPrice="
 				+ highPrice + ", lowPrice=" + lowPrice + ", closePrice="
 				+ closePrice + ", isinCode=" + isinCode + "]";
+	}
+	@Override
+	public int compareTo(Scripts o) {
+		
+		return this.getScriptName().compareTo(o.getScriptName());
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.arpit.ltcg;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class ScriptController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+        Collections.sort(scriptDetail);
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", scriptDetail);
 
@@ -59,7 +60,7 @@ public class ScriptController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		Collections.sort(mfDetail);
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", mfDetail);
 
@@ -85,7 +86,7 @@ public class ScriptController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		Collections.sort(scriptDetail);
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", scriptDetail);
 
@@ -112,7 +113,7 @@ public class ScriptController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
+		Collections.sort(mfDetail);
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", mfDetail);
 

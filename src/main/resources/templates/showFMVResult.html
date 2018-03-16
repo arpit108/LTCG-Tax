@@ -7,25 +7,15 @@
 </head>
 <body>
 	<div align="center">
-		<h2>Decision Result View</h2>
+		<h3>FMV Value Result of MF/Stock</h3>
 		<table border="1">
 			<tr>
 				<td>Scheme/Script name</td>
-				<td>Buying Price</td>
-				<td>Selling Price</td>
-				<td>Cost Of Aqusition</td>
 				<td>Fair Market value (FMV)</td>
-				<td>Decision</td>
-				<td>Reason Of Decision</td>
 			</tr>
 			<tr>
 				<td th:text="${sn}" />
-				<td th:text="${bp}" />
-				<td th:text="${sp}" />
-				<td th:text="${coa}" />
 				<td th:text="${fmv}" />
-				<td th:text="${decision}" />
-				<td th:text="${rod}" />
 			</tr>
 		</table>
 		<table>

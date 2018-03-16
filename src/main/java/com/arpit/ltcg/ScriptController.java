@@ -39,7 +39,7 @@ public class ScriptController {
 
 		return "stocksView";
 	}
-
+	
 	@PostMapping("/stocks")
 	public String stocksRequestSubmit(@ModelAttribute Script stockModel, Model model) {
 
@@ -77,4 +77,58 @@ public class ScriptController {
 		return "showResult";
 	}
 
+	@GetMapping("/stockfmv")
+	public String stockFMVRequestForm(Model model) {
+		List<Scripts> scriptDetail = null;
+		try {
+			scriptDetail = service.readStocksCSVToBean();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		model.addAttribute("stocks", new Script());
+		model.addAttribute("scriptDetail", scriptDetail);
+
+		return "stockFMVView";
+	}
+	
+	@PostMapping("/stockfmv")
+	public String stockFMVRequestSubmit(@ModelAttribute Script stockModel, Model model) {
+
+		if (service.stockDecisionModel(stockModel) == null)
+			return "errorPage";
+
+		model.addAllAttributes(service.stockDecisionModel(stockModel));
+
+		return "showFMVResult";
+	}
+	
+	
+	@GetMapping("/mffmv")
+	public String mfFMVRequestForm(Model model) {
+		List<MutualFundObject> mfDetail = null;
+		try {
+			mfDetail = service.readMFCSVToBean();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		model.addAttribute("stocks", new Script());
+		model.addAttribute("scriptDetail", mfDetail);
+
+		return "mfFMVView";
+	}
+
+	@PostMapping("/mffmv")
+	public String mfFMVRequestSubmit(@ModelAttribute Script stockModel, Model model) {
+
+		if (service.mfDecisionModel(stockModel) == null)
+			return "errorPage";
+
+		model.addAllAttributes(service.mfDecisionModel(stockModel));
+
+		return "showFMVResult";
+	}
+
+	
 }

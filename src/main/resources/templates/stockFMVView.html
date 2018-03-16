@@ -6,51 +6,26 @@
 </head>
 <body>
 	<div align="center">
-		<h3>LTCG TAX Calculator for Mutual Funds</h3>
-		<form action="#" th:action="@{/mf}" th:object="${stocks}"
+	<h3>Stock FMV View</h3>
+		<form action="#" th:action="@{/stockfmv}" th:object="${stocks}"
 			method="post">
 			<table>
 				<tr>
-					<td>Mutual Fund Name:</td>
+					<td>Stock Name:</td>
 					<td></td>
 					<td><select th:field="*{scriptName}">
 							<option th:each="script :${scriptDetail}"
-								th:value="${script.schemeName}" th:text="${script.schemeName}"></option>
+								th:value="${script.scriptName}" th:text="${script.scriptName}"></option>
 					</select></td>
 				</tr>
 				<tr>
 					<td>OR</td>
 				</tr>
 				<tr>
-					<td>MF Scheme Code (Optional):</td>
+					<td>Stock Scheme Code (Optional):</td>
 					<td></td>
-					<td><input type="number" th:field="*{mfSchemeCode}" /></td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td></td>
-				</tr>
-				<tr>
-					<td>Buying NAV Price:</td>
-					<td></td>
-					<td><input type="number" required min="0" value="0" step=".01"
-						th:field="*{buyingPrice}" /></td>
-				</tr>
-				<tr>
-					<td>Selling NAV Price:</td>
-					<td></td>
-					<td><input type="number" required min="0" value="0" step=".01"
-						th:field="*{sellingPrice}" /></td>
-				</tr>
-				<tr>
-					<td>Total Units:</td>
-					<td></td>
-					<td><input type="number" th:field="*{totalQuantity}" /></td>
+					<td><input type="number" value="500010"
+						th:field="*{stockSchemeCode}" /></td>
 				</tr>
 				<tr>
 					<td />
@@ -72,6 +47,8 @@
 					<td><input type="submit" value="Submit" /></td>
 					<td><input type="reset" value="Reset" /></td>
 				</tr>
+
+
 			</table>
 		</form>
 		<table>

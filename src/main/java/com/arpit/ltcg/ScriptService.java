@@ -170,9 +170,18 @@ public class ScriptService {
 		Long scriptCode = stockModel.getStockSchemeCode();
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(stockModel.getBuyingPrice());
-		decision.setSellingPrice(stockModel.getSellingPrice());
-
+		
+		if(stockModel.getBuyingPrice()!=null)
+		 decision.setBuyingPrice(stockModel.getBuyingPrice());
+		else
+	      decision.setBuyingPrice(1.0);
+	    		
+		if(stockModel.getSellingPrice()!=null)
+		 decision.setSellingPrice(stockModel.getSellingPrice());
+		else
+		 decision.setSellingPrice(1.0);
+		
+		
 		if (stockModel.getTotalQuantity() != null)
 			decision.setTotalQuantity(stockModel.getTotalQuantity());
 		else
@@ -223,12 +232,19 @@ public class ScriptService {
 	public Map<String, String> mfDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		decision.setBuyingPrice(stockModel.getBuyingPrice());
-		decision.setSellingPrice(stockModel.getSellingPrice());
 		
 		String scriptName = stockModel.getScriptName();
 		Long scriptCode = stockModel.getMfSchemeCode();
-
+		
+		if(stockModel.getBuyingPrice()!=null)
+			 decision.setBuyingPrice(stockModel.getBuyingPrice());
+			else
+		      decision.setBuyingPrice(1.0);
+		    		
+			if(stockModel.getSellingPrice()!=null)
+			 decision.setSellingPrice(stockModel.getSellingPrice());
+			else
+			 decision.setSellingPrice(1.0);
 		
 		if (stockModel.getTotalQuantity() != null)
 			decision.setTotalQuantity(stockModel.getTotalQuantity());

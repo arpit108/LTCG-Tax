@@ -4,15 +4,8 @@
 <meta charset="ISO-8859-1">
 <title>LTCG TAX CALCULATOR</title>
 </head>
-<style>
-.content {
-    max-width: 500px;
-    margin: auto;
-}
-</style>
 <body>
-
-	<div class="content">
+	<div align="center">
 		<h3>LTCG TAX Calculator For Stocks</h3>
 		<form action="#" th:action="@{/stocks}" th:object="${stocks}"
 			method="post">
@@ -20,17 +13,28 @@
 				<tr>
 					<td>Stock Name:</td>
 					<td></td>
-					<td>
-					    <select th:field="*{scriptName}">
-					        <option th:each="script :${scriptDetail}" th:value="${script.scriptName}" th:text="${script.scriptName}"></option>
-					    </select>
-					</td>
+					<td><select th:field="*{scriptName}">
+							<option th:each="script :${scriptDetail}"
+								th:value="${script.scriptName}" th:text="${script.scriptName}"></option>
+					</select></td>
 				</tr>
-				
+				<tr>
+					<td>OR</td>
+				</tr>
 				<tr>
 					<td>Stock Scheme Code (Optional):</td>
 					<td></td>
-					<td><input type="number" value="500010" th:field="*{stockSchemeCode}"/></td>
+					<td><input type="number" value="500010"
+						th:field="*{stockSchemeCode}" /></td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
 				</tr>
 				<tr>
 					<td>Buying Price:</td>
@@ -50,22 +54,22 @@
 					<td><input type="number" th:field="*{totalQuantity}" /></td>
 				</tr>
 				<tr>
-					<td/>
+					<td />
 				</tr>
 				<tr>
-					<td/>
+					<td />
 				</tr>
 				<tr>
-					<td/>
+					<td />
 				</tr>
 				<tr>
-					<td/>
+					<td />
 				</tr>
 				<tr>
-					<td/>
+					<td />
 				</tr>
 				<tr>
-					<td/>
+					<td />
 					<td><input type="submit" value="Submit" /></td>
 					<td><input type="reset" value="Reset" /></td>
 				</tr>
@@ -73,6 +77,23 @@
 
 			</table>
 		</form>
+		<table>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td></td>
+			</tr>
+			<tr>
+				<td><a href="/">Return to Home Page</a></td>
+			</tr>
+		</table>
 	</div>
 </body>
 </html>

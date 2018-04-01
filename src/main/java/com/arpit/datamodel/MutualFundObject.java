@@ -1,5 +1,12 @@
 package com.arpit.datamodel;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class MutualFundObject implements Comparable<MutualFundObject> {
 
 	String schemeCode;
@@ -7,36 +14,7 @@ public class MutualFundObject implements Comparable<MutualFundObject> {
 	String schemeName;
 	String netAssetValue;
 	
-	public String getSchemeCode() {
-		return schemeCode;
-	}
-	public void setSchemeCode(String schemeCode) {
-		this.schemeCode = schemeCode;
-	}
-	public String getIsinCode() {
-		return isinCode;
-	}
-	public void setIsinCode(String isinCode) {
-		this.isinCode = isinCode;
-	}
-	public String getSchemeName() {
-		return schemeName;
-	}
-	public void setSchemeName(String schemeName) {
-		this.schemeName = schemeName;
-	}
-	public String getNetAssetValue() {
-		return netAssetValue;
-	}
-	public void setNetAssetValue(String netAssetValue) {
-		this.netAssetValue = netAssetValue;
-	}
-	@Override
-	public String toString() {
-		return "MutualFundObject [schemeCode=" + schemeCode + ", isinCode="
-				+ isinCode + ", schemeName=" + schemeName + ", netAssetValue="
-				+ netAssetValue + "]";
-	}
+	
 	@Override
 	public int compareTo(MutualFundObject o) {
 		return this.getSchemeName().compareTo(o.getSchemeName());

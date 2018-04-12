@@ -294,10 +294,11 @@ public class ScriptService {
 
 	@SuppressWarnings("unchecked")
 	public List<Scripts> getAllStocksScripts() {
-		List<Scripts> scriptDetail = new ArrayList<>();
+		List<Scripts> scriptDetail = null;
 		try {
 			if (cache.get("scripts") == null) {
 				scriptDetail = readStocksCSVToBean();
+				Collections.sort(scriptDetail);
 				cache.put("scripts", scriptDetail);
 			} else {
 				scriptDetail = (List<Scripts>) cache.get("scripts");
@@ -306,16 +307,17 @@ public class ScriptService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Collections.sort(scriptDetail);
+		
 		return scriptDetail;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<MutualFundObject> getAllMFNAV() {
-		List<MutualFundObject> mfDetail = new ArrayList<>();
+		List<MutualFundObject> mfDetail = null;
 		try {
 			if (cache.get("mfDetail") == null) {
 				mfDetail = readMFCSVToBean();
+				Collections.sort(mfDetail);
 				cache.put("mfDetail", mfDetail);
 			} else {
 				mfDetail = (List<MutualFundObject>) cache.get("mfDetail");
@@ -324,7 +326,7 @@ public class ScriptService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		Collections.sort(mfDetail);
+		
 		return mfDetail;
 	}
 

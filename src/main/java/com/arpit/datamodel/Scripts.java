@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Scripts implements Comparable<Scripts>{
+public class Scripts implements Comparable<Scripts> {
 
 	String scriptCode;
 	String scriptName;
@@ -19,11 +19,11 @@ public class Scripts implements Comparable<Scripts>{
 	String lowPrice;
 	String closePrice;
 	String isinCode;
+
 	@Override
 	public int compareTo(Scripts o) {
-		
+
 		return this.getScriptName().compareTo(o.getScriptName());
 	}
-	
-	
+
 }

@@ -4,9 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,8 @@ public class ScriptService {
 
 	String saleDecisionTemplate = "Sale Now!! Cost of Aquisition as per LTCG rule is : %s and Cost of your Selling is : %s. Hence Net Profit you are getting is %s which will be taxed if not sold before 31-March-2018 ";
 	String notSaleDecisionTemplate = "Not Sale Now !! Cost of Aquisition as per LTCH rule is : %s and Cost of you Selling is : %s. Hence Net Loss you are getting is %s which will be set-off against your Long term Capital gain if sold after 31-March-2018 ";
+
+	ConcurrentHashMap<String, Object> cache = new ConcurrentHashMap<>();
 
 	public Map<String, String> getDecisionMap(DecisionObject decisionObj) {
 
@@ -170,18 +174,17 @@ public class ScriptService {
 		Long scriptCode = stockModel.getStockSchemeCode();
 
 		DecisionObject decision = new DecisionObject();
-		
-		if(stockModel.getBuyingPrice()!=null)
-		 decision.setBuyingPrice(stockModel.getBuyingPrice());
+
+		if (stockModel.getBuyingPrice() != null)
+			decision.setBuyingPrice(stockModel.getBuyingPrice());
 		else
-	      decision.setBuyingPrice(1.0);
-	    		
-		if(stockModel.getSellingPrice()!=null)
-		 decision.setSellingPrice(stockModel.getSellingPrice());
+			decision.setBuyingPrice(1.0);
+
+		if (stockModel.getSellingPrice() != null)
+			decision.setSellingPrice(stockModel.getSellingPrice());
 		else
-		 decision.setSellingPrice(1.0);
-		
-		
+			decision.setSellingPrice(1.0);
+
 		if (stockModel.getTotalQuantity() != null)
 			decision.setTotalQuantity(stockModel.getTotalQuantity());
 		else
@@ -205,19 +208,16 @@ public class ScriptService {
 					decision.setScriptName(script.getScriptName());
 				}
 			}
-		}
-		else if(StringUtils.isNotBlank(scriptName))
-		{
+		} else if (StringUtils.isNotBlank(scriptName)) {
 			for (Scripts script : scripts) {
-				if (script.getScriptName().trim()
-						.equalsIgnoreCase(stockModel.getScriptName().trim())) {
+				if (script.getScriptName().trim().equalsIgnoreCase(stockModel.getScriptName().trim())) {
 					System.out.println(script.getHighPrice());
 					fairMarketvalue = script.getHighPrice();
 					decision.setFairMarketValue(Double.parseDouble(fairMarketvalue));
 					decision.setScriptName(script.getScriptName());
 				}
 			}
-			
+
 		}
 
 		if (StringUtils.isBlank(decision.getScriptName())) {
@@ -232,20 +232,20 @@ public class ScriptService {
 	public Map<String, String> mfDecisionModel(Script stockModel) {
 
 		DecisionObject decision = new DecisionObject();
-		
+
 		String scriptName = stockModel.getScriptName();
 		Long scriptCode = stockModel.getMfSchemeCode();
-		
-		if(stockModel.getBuyingPrice()!=null)
-			 decision.setBuyingPrice(stockModel.getBuyingPrice());
-			else
-		      decision.setBuyingPrice(1.0);
-		    		
-			if(stockModel.getSellingPrice()!=null)
-			 decision.setSellingPrice(stockModel.getSellingPrice());
-			else
-			 decision.setSellingPrice(1.0);
-		
+
+		if (stockModel.getBuyingPrice() != null)
+			decision.setBuyingPrice(stockModel.getBuyingPrice());
+		else
+			decision.setBuyingPrice(1.0);
+
+		if (stockModel.getSellingPrice() != null)
+			decision.setSellingPrice(stockModel.getSellingPrice());
+		else
+			decision.setSellingPrice(1.0);
+
 		if (stockModel.getTotalQuantity() != null)
 			decision.setTotalQuantity(stockModel.getTotalQuantity());
 		else
@@ -259,19 +259,17 @@ public class ScriptService {
 		}
 		String fairMarketvalue = null;
 		if (scriptCode != null) {
-		for (MutualFundObject mfObject : mfObjects) {
-			if (mfObject.getSchemeCode().trim().equalsIgnoreCase(String.valueOf(scriptCode))) {
+			for (MutualFundObject mfObject : mfObjects) {
+				if (mfObject.getSchemeCode().trim().equalsIgnoreCase(String.valueOf(scriptCode))) {
 
-				fairMarketvalue = mfObject.getNetAssetValue();
-				System.out.println(fairMarketvalue);
-				decision.setFairMarketValue(Double.parseDouble(fairMarketvalue));
-				decision.setScriptName(mfObject.getSchemeName());
+					fairMarketvalue = mfObject.getNetAssetValue();
+					System.out.println(fairMarketvalue);
+					decision.setFairMarketValue(Double.parseDouble(fairMarketvalue));
+					decision.setScriptName(mfObject.getSchemeName());
 
+				}
 			}
-		}
-		}
-		else if(StringUtils.isNotBlank(scriptName))
-		{
+		} else if (StringUtils.isNotBlank(scriptName)) {
 			for (MutualFundObject mfObject : mfObjects) {
 				if (mfObject.getSchemeName().trim().equalsIgnoreCase(scriptName)) {
 
@@ -282,11 +280,9 @@ public class ScriptService {
 
 				}
 			}
-			
-			
+
 		}
-		
-		
+
 		if (StringUtils.isBlank(decision.getScriptName())) {
 			return null;
 		}
@@ -294,6 +290,42 @@ public class ScriptService {
 		Map<String, String> map = getDecisionMap(decision);
 
 		return map;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Scripts> getAllStocksScripts() {
+		List<Scripts> scriptDetail = new ArrayList<>();
+		try {
+			if (cache.get("scripts") == null) {
+				scriptDetail = readStocksCSVToBean();
+				cache.put("scripts", scriptDetail);
+			} else {
+				scriptDetail = (List<Scripts>) cache.get("scripts");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Collections.sort(scriptDetail);
+		return scriptDetail;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<MutualFundObject> getAllMFNAV() {
+		List<MutualFundObject> mfDetail = new ArrayList<>();
+		try {
+			if (cache.get("mfDetail") == null) {
+				mfDetail = readMFCSVToBean();
+				cache.put("mfDetail", mfDetail);
+			} else {
+				mfDetail = (List<MutualFundObject>) cache.get("mfDetail");
+			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Collections.sort(mfDetail);
+		return mfDetail;
 	}
 
 }

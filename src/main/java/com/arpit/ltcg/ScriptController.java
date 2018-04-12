@@ -3,6 +3,8 @@ package com.arpit.ltcg;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,19 +30,12 @@ public class ScriptController {
 
 	@GetMapping("/stocks")
 	public String stocksRequestForm(Model model) {
-		List<Scripts> scriptDetail = null;
-		try {
-			scriptDetail = service.readStocksCSVToBean();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        Collections.sort(scriptDetail);
+		List<Scripts> scriptDetail = service.getAllStocksScripts();
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", scriptDetail);
-
 		return "stocksView";
 	}
-	
+
 	@PostMapping("/stocks")
 	public String stocksRequestSubmit(@ModelAttribute Script stockModel, Model model) {
 
@@ -54,16 +49,9 @@ public class ScriptController {
 
 	@GetMapping("/mf")
 	public String mfRequestForm(Model model) {
-		List<MutualFundObject> mfDetail = null;
-		try {
-			mfDetail = service.readMFCSVToBean();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Collections.sort(mfDetail);
+		List<MutualFundObject> mfDetail = service.getAllMFNAV();
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", mfDetail);
-
 		return "mfView";
 	}
 
@@ -80,19 +68,12 @@ public class ScriptController {
 
 	@GetMapping("/stockfmv")
 	public String stockFMVRequestForm(Model model) {
-		List<Scripts> scriptDetail = null;
-		try {
-			scriptDetail = service.readStocksCSVToBean();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Collections.sort(scriptDetail);
+		List<Scripts> scriptDetail = service.getAllStocksScripts();
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", scriptDetail);
-
 		return "stockFMVView";
 	}
-	
+
 	@PostMapping("/stockfmv")
 	public String stockFMVRequestSubmit(@ModelAttribute Script stockModel, Model model) {
 
@@ -103,17 +84,10 @@ public class ScriptController {
 
 		return "showFMVResult";
 	}
-	
-	
+
 	@GetMapping("/mffmv")
 	public String mfFMVRequestForm(Model model) {
-		List<MutualFundObject> mfDetail = null;
-		try {
-			mfDetail = service.readMFCSVToBean();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		Collections.sort(mfDetail);
+		List<MutualFundObject> mfDetail = service.getAllMFNAV();
 		model.addAttribute("stocks", new Script());
 		model.addAttribute("scriptDetail", mfDetail);
 
@@ -131,5 +105,4 @@ public class ScriptController {
 		return "showFMVResult";
 	}
 
-	
 }

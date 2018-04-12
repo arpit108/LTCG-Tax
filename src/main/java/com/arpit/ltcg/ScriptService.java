@@ -24,7 +24,10 @@ import com.arpit.datamodel.DecisionObject;
 import com.arpit.datamodel.MutualFundObject;
 import com.arpit.datamodel.Scripts;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class ScriptService {
 
 	String saleDecisionTemplate = "Sale Now!! Cost of Aquisition as per LTCG rule is : %s and Cost of your Selling is : %s. Hence Net Profit you are getting is %s which will be taxed if not sold before 31-March-2018 ";
@@ -297,10 +300,12 @@ public class ScriptService {
 		List<Scripts> scriptDetail = null;
 		try {
 			if (cache.get("scripts") == null) {
+				log.info("Cache Miss...");
 				scriptDetail = readStocksCSVToBean();
 				Collections.sort(scriptDetail);
 				cache.put("scripts", scriptDetail);
 			} else {
+				log.info("Cache Hit ..");
 				scriptDetail = (List<Scripts>) cache.get("scripts");
 			}
 
@@ -316,10 +321,12 @@ public class ScriptService {
 		List<MutualFundObject> mfDetail = null;
 		try {
 			if (cache.get("mfDetail") == null) {
+				log.info("Cache Miss...");
 				mfDetail = readMFCSVToBean();
 				Collections.sort(mfDetail);
 				cache.put("mfDetail", mfDetail);
 			} else {
+				log.info("Cache Hit ..");
 				mfDetail = (List<MutualFundObject>) cache.get("mfDetail");
 			}
 

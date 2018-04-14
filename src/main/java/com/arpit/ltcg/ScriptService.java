@@ -30,8 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ScriptService {
 
-	String saleDecisionTemplate = "Sale Now!! Cost of Aquisition as per LTCG rule is : %s and Cost of your Selling is : %s. Hence Net Profit you are getting is %s which will be taxed if not sold before 31-March-2018 ";
-	String notSaleDecisionTemplate = "Not Sale Now !! Cost of Aquisition as per LTCH rule is : %s and Cost of you Selling is : %s. Hence Net Loss you are getting is %s which will be set-off against your Long term Capital gain if sold after 31-March-2018 ";
+	String netProfitTemplate = "As per LTCG rule cost of acquisition is : %s and cost of your selling is : %s. Hence Net Profit you are getting is %s which will be taxed at rate of 10 pc if in your Financial year(FY2018-19) capital gain is more than 1 Lacs.";
+	String netLossTemplate = "As per LTCG rule cost of acquisition is : %s and cost of your selling is : %s. Hence Net Capital Loss you are getting is %s which will be set-off against your Long term Capital gain for FY2018-19.";
 
 	ConcurrentHashMap<String, Object> cache = new ConcurrentHashMap<>();
 
@@ -47,14 +47,13 @@ public class ScriptService {
 		decisionObj.setCostOfAqusition(costOfAquisition);
 
 		if (sellingPriceValue > costOfAquisition) {
-			decisionObj.setDecision("Sale");
-			decisionObj.setReasonOfDecision(String.format(saleDecisionTemplate, costOfAquisition, sellingPriceValue,
-					(sellingPriceValue - costOfAquisition) * decisionObj.getTotalQuantity()));
+			Double netProfit=(sellingPriceValue - costOfAquisition) * decisionObj.getTotalQuantity();
+			decisionObj.setDecision("Net Profit : "+netProfit);
+			decisionObj.setReasonOfDecision(String.format(netProfitTemplate, costOfAquisition, sellingPriceValue,netProfit));
 		} else {
-
-			decisionObj.setDecision("Not Sale");
-			decisionObj.setReasonOfDecision(String.format(notSaleDecisionTemplate, costOfAquisition, sellingPriceValue,
-					(costOfAquisition - sellingPriceValue) * decisionObj.getTotalQuantity()));
+			Double netLoss=(costOfAquisition - sellingPriceValue) * decisionObj.getTotalQuantity();
+			decisionObj.setDecision("Net Loss : "+netLoss);
+			decisionObj.setReasonOfDecision(String.format(netLossTemplate, costOfAquisition, sellingPriceValue,netLoss));
 		}
 
 		return buildMap(decisionObj);

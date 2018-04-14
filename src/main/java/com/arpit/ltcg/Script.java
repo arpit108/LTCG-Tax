@@ -13,7 +13,7 @@ public class Script {
 	String scriptName;
 	Double buyingPrice;
 	Double sellingPrice;
-	Date buyingDate;
+	Date acquisitionDate;
 	Long mfSchemeCode;
 	Long stockSchemeCode;
 	Long totalQuantity;

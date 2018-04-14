@@ -3,6 +3,7 @@ package com.arpit.ltcg;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -45,13 +46,13 @@ public class ScriptService {
 		Double costOfAquisition = buyingPriceValue > lowerValue ? buyingPriceValue : lowerValue;
 
 		decisionObj.setCostOfAqusition(costOfAquisition);
-
+		DecimalFormat two = new DecimalFormat("0.00");
 		if (sellingPriceValue > costOfAquisition) {
-			Double netProfit=(sellingPriceValue - costOfAquisition) * decisionObj.getTotalQuantity();
+			String netProfit=two.format((sellingPriceValue - costOfAquisition) * decisionObj.getTotalQuantity());
 			decisionObj.setDecision("Net Profit : "+netProfit);
 			decisionObj.setReasonOfDecision(String.format(netProfitTemplate, costOfAquisition, sellingPriceValue,netProfit));
 		} else {
-			Double netLoss=(costOfAquisition - sellingPriceValue) * decisionObj.getTotalQuantity();
+			String netLoss=two.format((costOfAquisition - sellingPriceValue) * decisionObj.getTotalQuantity());
 			decisionObj.setDecision("Net Loss : "+netLoss);
 			decisionObj.setReasonOfDecision(String.format(netLossTemplate, costOfAquisition, sellingPriceValue,netLoss));
 		}

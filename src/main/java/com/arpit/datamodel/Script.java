@@ -1,4 +1,4 @@
-package com.arpit.ltcg;
+package com.arpit.datamodel;
 
 import java.util.Date;
 
